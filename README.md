@@ -245,6 +245,60 @@ Buildings are defined in `app/data/buildings.ts`:
 
 ---
 
+## Creating Your Own Assets
+
+Want to make your own isometric buildings? Here's a modern AI-assisted pipeline:
+
+### 1. Generate Concept Art
+Use an image generation model to create your building concept. Look for models that handle architecture well.
+
+**Tools:** Midjourney, Stable Diffusion, or specialized models like [Nano Banana](https://replicate.com/fofr/nanobanana)
+
+**Tips:**
+- Prompt for "isometric view" or "3/4 view"
+- Specify architectural style (Victorian, modern, brutalist, etc.)
+- Include "game asset" or "video game building" for cleaner results
+
+### 2. Convert to 3D
+Turn your 2D concept into a 3D model. This gives you the ability to render from any angle consistently.
+
+**Tools:**
+- [Trellis](https://github.com/microsoft/TRELLIS) - Microsoft's image-to-3D
+- [Hunyuan3D](https://github.com/Tencent/Hunyuan3D-1) - Tencent's image-to-3D
+- Tripo, Meshy, or other image-to-3D services
+
+### 3. Render Isometric Sprites
+Set up your camera at the correct isometric angle and render out sprites for each direction.
+
+**Tools:**
+- [PixelOver](https://pixelover.io/) - Great for pixel art style renders
+- Blender - Free, full control over rendering
+- Any 3D software with orthographic camera support
+
+**Camera setup for 2:1 isometric:**
+- Orthographic projection
+- 30° rotation from top-down
+- 45° rotation for each cardinal direction (0°, 90°, 180°, 270°)
+
+### 4. Post-Processing
+Clean up your renders and ensure consistency:
+- Match the color palette of existing assets
+- Add shadows/ambient occlusion if needed
+- Ensure transparent backgrounds
+- Check that the anchor point aligns with the grid
+
+### Sprite Specifications
+
+| Property | Value |
+|----------|-------|
+| Tile size | 44x22 pixels |
+| Canvas size | 512x512 (or larger for big buildings) |
+| Anchor point | Bottom-center (front corner of building) |
+| Format | PNG with transparency |
+| Directions | South (required), North/East/West (optional) |
+
+---
+
 ## Asset Usage
 
 ### Buildings, Props, Tiles
