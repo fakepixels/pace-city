@@ -276,21 +276,24 @@ Clean up your renders and ensure consistency:
 **The most important rule:** The bottom (southeast) corner of your building should align with pixel coordinates **(256, 512)** on a 512x512 canvas—that's the bottom-center of the image.
 
 ```
-         Canvas (512x512)
-    ┌─────────────────────────┐
-    │                         │
-    │      ┌─────────┐        │
-    │     /           \       │
-    │    /   BUILDING  \      │
-    │   /               \     │
-    │  /                 \    │
-    │ /                   \   │
-    │◄─────────────────────►  │
-    │         256px           │
-    └────────────┬────────────┘
-                 │
-            (256, 512)
-         Front corner here
+        Canvas (512x512)
+   ┌─────────────────────────┐
+   │            ◇            │
+   │           /|\           │
+   │          / | \          │
+   │         /  |  \         │
+   │        / BLDG  \        │
+   │       /    |    \       │
+   │      ◇     |     ◇      │
+   │       \    |    /       │
+   │        \   |   /        │
+   │         \  |  /         │
+   │          \ | /          │
+   │           \|/           │
+   └────────────◇────────────┘
+                │
+           (256, 512)
+        Front corner here
 ```
 
 **Why this matters:**
