@@ -301,8 +301,6 @@ Clean up your renders and ensure consistency:
 - This ensures buildings align correctly with the isometric grid
 - Misaligned sprites will appear to "float" or sink into the ground
 
-**For larger canvases:** If your building needs more space (e.g., 1024x1024), the front corner should still be at the horizontal center, bottom edge—so (512, 1024) for a 1024x1024 canvas.
-
 ---
 
 ## Asset Usage
