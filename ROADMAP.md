@@ -4,6 +4,27 @@ A rough plan for evolving Pogicity into a full city simulation game, inspired by
 
 ---
 
+## Phase 0: Greenwich Village Demo Map - Immediate Improvements
+
+### Location & Authenticity
+- [ ] **Relocate to Washington Square Park area** - The demo should center around Washington Square Park in Greenwich Village, NYC
+- [ ] Position Pace Capital office (#6 West 9th Street) in relation to Washington Square Park
+- [ ] Add Washington Square Park as a central landmark with arch
+
+### Road Structure Fixes
+- [ ] **Fix traffic loop issue** - Current road structure traps NPCs and cars in infinite loops
+- [ ] Redesign road network to allow proper circulation
+- [ ] Add exit routes and connection points
+- [ ] Ensure all road segments connect properly to allow through-traffic
+
+### Visual Polish
+- [ ] More street trees and greenery
+- [ ] Better building variety and density
+- [ ] Additional props and street furniture
+- [ ] Park improvements with more landscaping
+
+---
+
 ## Phase 1: Core Assets & Lots (Current)
 
 ### Building Assets
