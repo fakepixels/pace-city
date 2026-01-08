@@ -1267,6 +1267,20 @@ export const BUILDINGS: Record<string, BuildingDefinition> = {
     icon: "🏬",
     supportsRotation: true,
   },
+  "pace-capital": {
+    id: "pace-capital",
+    name: "Pace Capital",
+    category: "commercial",
+    footprint: { width: 2, height: 2 },
+    sprites: {
+      south: "/Building/commercial/2x2pace_capital_south.png",
+      north: "/Building/commercial/2x2pace_capital_north.png",
+      east: "/Building/commercial/2x2pace_capital_east.png",
+      west: "/Building/commercial/2x2pace_capital_west.png",
+    },
+    icon: "🏢",
+    supportsRotation: true,
+  },
 };
 
 // Helper to get building by ID
