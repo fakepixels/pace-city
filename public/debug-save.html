@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Save Data</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #fff; }
+        pre { background: #2a2a2a; padding: 20px; border-radius: 8px; overflow: auto; max-height: 600px; }
+        h2 { color: #4a9eff; }
+        .stat { background: #2a2a2a; padding: 10px; margin: 10px 0; border-left: 4px solid #4a9eff; }
+    </style>
+</head>
+<body>
+    <h1>Save Data Debugger</h1>
+
+    <h2>LocalStorage Keys</h2>
+    <div id="keys"></div>
+
+    <h2>Greenwich Village Save Stats</h2>
+    <div id="stats"></div>
+
+    <h2>Sample Grid Data (first 5 rows)</h2>
+    <pre id="sample"></pre>
+
+    <script>
+        // List all localStorage keys
+        const keysDiv = document.getElementById('keys');
+        const allKeys = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('pogicity_save_')) {
+                allKeys.push(key);
+            }
+        }
+        keysDiv.innerHTML = allKeys.length > 0
+            ? allKeys.map(k => `<div class="stat">${k}</div>`).join('')
+            : '<p>No saves found</p>';
+
+        // Check Greenwich Village save
+        const saveKey = 'pogicity_save_Greenwich Village';
+        const saveData = localStorage.getItem(saveKey);
+
+        const statsDiv = document.getElementById('stats');
+        const sampleDiv = document.getElementById('sample');
+
+        if (saveData) {
+            try {
+                const data = JSON.parse(saveData);
+
+                // Count types
+                let buildingCount = 0;
+                let roadCount = 0;
+                let asphaltCount = 0;
+                let grassCount = 0;
+                let buildingIds = new Set();
+
+                if (data.grid && Array.isArray(data.grid)) {
+                    for (const row of data.grid) {
+                        for (const cell of row) {
+                            if (cell.type === 'building') {
+                                buildingCount++;
+                                if (cell.buildingId) buildingIds.add(cell.buildingId);
+                            } else if (cell.type === 'road') roadCount++;
+                            else if (cell.type === 'asphalt') asphaltCount++;
+                            else if (cell.type === 'grass') grassCount++;
+                        }
+                    }
+                }
+
+                statsDiv.innerHTML = `
+                    <div class="stat">Grid Size: ${data.grid?.length || 0} x ${data.grid?.[0]?.length || 0}</div>
+                    <div class="stat">Building Tiles: ${buildingCount}</div>
+                    <div class="stat">Unique Buildings: ${buildingIds.size}</div>
+                    <div class="stat">Road Tiles: ${roadCount}</div>
+                    <div class="stat">Asphalt Tiles: ${asphaltCount}</div>
+                    <div class="stat">Grass Tiles: ${grassCount}</div>
+                    <div class="stat">Has Pace Capital: ${buildingIds.has('pace-capital') ? 'YES ✓' : 'NO ✗'}</div>
+                    <div class="stat">Character Count: ${data.characterCount || 0}</div>
+                    <div class="stat">Car Count: ${data.carCount || 0}</div>
+                `;
+
+                // Show first 5 rows
+                sampleDiv.textContent = JSON.stringify(data.grid?.slice(0, 5), null, 2);
+
+            } catch (e) {
+                statsDiv.innerHTML = `<p style="color: #ff4a4a;">Error parsing save: ${e.message}</p>`;
+            }
+        } else {
+            statsDiv.innerHTML = '<p style="color: #ff4a4a;">No Greenwich Village save found in localStorage</p>';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Greenwich Village...</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #2a2a2a;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: #1a1a1a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        h1 {
+            color: #4a9eff;
+            margin-bottom: 20px;
+        }
+        .loading {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .success {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .error {
+            color: #ff4a4a;
+        }
+        button {
+            background: #4a9eff;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        button:hover {
+            background: #3a8eef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏙️ Loading Greenwich Village</h1>
+        <div id="status" class="loading">Initializing city...</div>
+        <div id="details"></div>
+        <button id="launchBtn" style="display:none;">Launch Game</button>
+    </div>
+
+    <script>
+        async function loadCity() {
+            const statusEl = document.getElementById('status');
+            const detailsEl = document.getElementById('details');
+            const launchBtn = document.getElementById('launchBtn');
+
+            try {
+                // Load the city data
+                statusEl.textContent = 'Loading city data...';
+                const response = await fetch('/greenwich-village.json');
+
+                if (!response.ok) {
+                    throw new Error(`Failed to load city data: ${response.statusText}`);
+                }
+
+                const cityData = await response.json();
+
+                // Save to localStorage
+                statusEl.textContent = 'Saving to localStorage...';
+                localStorage.setItem('pogicity_save_Greenwich Village', JSON.stringify(cityData));
+
+                // Success!
+                statusEl.className = 'success';
+                statusEl.textContent = '✓ Greenwich Village loaded successfully!';
+
+                detailsEl.innerHTML = `
+                    <p>West 9th Street has been created with:</p>
+                    <ul style="text-align: left; display: inline-block; margin: 10px 0;">
+                        <li>Pace Capital at 6 West 9th Street</li>
+                        <li>Greenwich Village townhouses & brownstones</li>
+                        <li>5th Avenue and 6th Avenue</li>
+                        <li>Historic landmarks and buildings</li>
+                    </ul>
+                `;
+
+                launchBtn.style.display = 'inline-block';
+                launchBtn.onclick = () => {
+                    window.location.href = '/';
+                };
+
+                // Auto-redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+
+            } catch (error) {
+                statusEl.className = 'error';
+                statusEl.textContent = '✗ Error loading city';
+                detailsEl.textContent = error.message;
+                console.error('Error loading city:', error);
+            }
+        }
+
+        // Load city when page loads
+        window.addEventListener('DOMContentLoaded', loadCity);
+    </script>
+</body>
+</html>
